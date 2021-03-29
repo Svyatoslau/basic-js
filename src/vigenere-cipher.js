@@ -30,25 +30,26 @@ class VigenereCipheringMachine {
 
 
   }
-  decrypt(message = -1, key = -1) {
+  decrypt(message=-1, key=-1) {
     if (message === undefined || key === undefined) return Error;
     let nShifr = String(message);
     let nKey = String(key);
-    nKey = ''.padStart(nMessage.length, nKey);
+    nKey = ''.padStart(nShifr.length, nKey);
     let start = 'A'.charCodeAt(0);
     let str = ''
     for (let i = 0, k = 0; i < nShifr.length; i++, k++) {
       if (/[A-Z]/.test(nShifr[i])) {
-        let ind = ((nShifr[i].toUpperCase().charCodeAt(0) - start) - (nKey[k].toUpperCase().charCodeAt(0) - start) + 26) % 26;
-        str += String.fromCharCode(ind);
+        let S = nShifr[i].charCodeAt(0);
+        let K = nKey[k].toUpperCase().charCodeAt(0);
+        let ind = Math.abs(((S - start) - (K - start) + 26) % 26);
+        str += String.fromCharCode(ind + start);
       } else {
         k--;
-        str += nMessage[i];
+        str += nShifr[i];
       }
     }
     if (!this.flag) return str.split('').reverse().join('');
     return str;
-
 
   }
 }
